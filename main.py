@@ -86,8 +86,13 @@ def main():
                     % (len(back), EXPECTED_SIZE))
     if hashlib.sha256(back).hexdigest() != EXPECTED_SHA256:
         return fail("written copy sha256 mismatch")
+    back_width, back_height = image_dimensions(back)
+    if (back_width, back_height) != (EXPECTED_WIDTH, EXPECTED_HEIGHT):
+        return fail("written copy is %dx%d, expected %dx%d"
+                    % (back_width, back_height,
+                       EXPECTED_WIDTH, EXPECTED_HEIGHT))
     print("wrote %s (%dx%d, %d bytes, sha256 %s)"
-          % (dst, width, height, len(back), EXPECTED_SHA256))
+          % (dst, back_width, back_height, len(back), EXPECTED_SHA256))
     return 0
 
 
